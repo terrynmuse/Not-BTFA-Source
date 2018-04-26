@@ -82,6 +82,15 @@ namespace ForgottenMemories
 		public int blightDashCooldown = 0;
 		public bool hasBlightFlashed = true;
 		
+		public bool energazerHelm = false;
+		public bool energazerVisor = false;
+		public bool phantomReapBuff = false;
+		public bool hasLightningArcanaProjectile1 = false;
+		public bool hasLightningArcanaProjectile2 = false;
+		public int navitasOrbisCounter = 1;
+		public int liberMortisCount = 1;
+		public int StaticShivProjectileCount = 0;
+		
 		public override void ResetEffects()
 		{
 			GroundPound = false;
@@ -130,6 +139,9 @@ namespace ForgottenMemories
 			BeeHive = false;
 			DivineBlessing = false;
 			spookedByArte = false;
+			energazerHelm = false;
+			energazerVisor = false;
+			phantomReapBuff = false;
 
 			if (!hasBlightFlashed)
 			{
@@ -345,7 +357,6 @@ namespace ForgottenMemories
 		
 		public override void SetupStartInventory(IList<Item> items)
 		{
-			
 			if (Tools.OneIn(5))
 			{
 				Item item = new Item();
@@ -651,7 +662,6 @@ namespace ForgottenMemories
 					player.statLife += damageTaken/7;
 					player.HealEffect(damageTaken/7);
 				}
-		
 		}
 		
 		public void ShinyOrbSpawn()
@@ -847,6 +857,39 @@ namespace ForgottenMemories
 		{
 			damageTaken = damage;
 			return true;
+		}
+
+		public override float UseTimeMultiplier (Item item)
+		{
+			//if (energazerHelm && Main.LocalPlayer.FindBuffIndex(mod.BuffType("Phantom_Reap_Buff")) > -1 && player.HeldItem.type == mod.ItemType("Phantom_Reap"))
+			if (energazerHelm && phantomReapBuff && player.HeldItem.type == mod.ItemType("Phantom_Reap"))
+			{
+				return 2.1f;
+			}
+			if (energazerVisor)
+			{
+				return 0.9f;
+			}
+			if (energazerHelm)
+			{
+				return 1.1f;
+			}
+			//if (energazerVisor && Main.LocalPlayer.FindBuffIndex(mod.BuffType("Phantom_Reap_Buff")) > -1 && player.HeldItem.type == mod.ItemType("Phantom_Reap"))
+			if (energazerVisor && phantomReapBuff && player.HeldItem.type == mod.ItemType("Phantom_Reap"))
+			{
+				return 1.9f;
+			}
+			//if (Main.LocalPlayer.FindBuffIndex(mod.BuffType("Phantom_Reap_Buff")) > -1 && player.HeldItem.type == mod.ItemType("Phantom_Reap"))
+			if (phantomReapBuff && player.HeldItem.type == mod.ItemType("Phantom_Reap"))
+			{
+				return 2f;
+			}
+            return 1f;	
+		}
+
+		public override void OnEnterWorld (Player player)
+		{
+			liberMortisCount = 1;
 		}
 	}
 }

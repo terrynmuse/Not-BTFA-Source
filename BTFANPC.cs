@@ -304,6 +304,11 @@ namespace ForgottenMemories
 				int p = Projectile.NewProjectile(npc.position.X, npc.position.Y, 0, 0, mod.ProjectileType("BloodBall"), 84, 4.4f, Main.myPlayer, 0f, 1f);
 				Main.projectile[p].Kill();
 			}
+
+			if (Main.player[npc.target].active && Main.player[npc.target].HeldItem.type == mod.ItemType("PhantomReap") && Main.rand.Next(2) == 0)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("Phantom"));
+			}
 			
 			if(TGEMWorld.forestInvasionUp)
             {
@@ -374,7 +379,6 @@ namespace ForgottenMemories
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("ShadowflameEmber"), amountToDrop); 
 			}
 			
-			
 			if (npc.type == NPCID.WallofFlesh && !Main.expertMode)
 			{
 				int amountToDrop = Main.rand.Next(10,15);
@@ -437,31 +441,18 @@ namespace ForgottenMemories
 			
 			if (npc.type == NPCID.KingSlime/* && NPC.downedSlimeKing && Main.rand.Next(10) == 0*/)
 			{
-				/*if (NPC.downedSlimeKing && Main.rand.Next(10) == 0)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SlimeCrystal"), 1);
-				else if (!NPC.downedSlimeKing)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SlimeCrystal"), 1);*/
 				if (!TGEMWorld.Gelatine || Main.rand.Next(10) == 0)
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("SlimeCrystal"), 1);
 			}
 			
 			if ((npc.type == 13 || npc.type == 14 || npc.type == 15) && npc.boss == true || npc.type == 266)
 			{
-				/*if (NPC.downedBoss2 && Main.rand.Next(10) == 0)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CryoCrystal"), 1); 
-				else if (!NPC.downedBoss2)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CryoCrystal"), 1); */
 				if (!TGEMWorld.Cryotine || Main.rand.Next(10) == 0)
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("CryoCrystal"), 1);
 			}
 			
-			//if (npc.type == 134 || npc.type == 127 || npc.type == 125 && !NPC.AnyNPCs(126) || npc.type == 126 && !NPC.AnyNPCs(125))
 			if (npc.type == 262)
 			{
-				/*if (NPC.downedMechBossAny && Main.rand.Next(10) == 0)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlightCrystal"), 1); 
-				else if (!NPC.downedMechBossAny)
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlightCrystal"), 1); */
 				if (!TGEMWorld.Blight || Main.rand.Next(10) == 0)
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, mod.ItemType("BlightCrystal"), 1); 
 			}
